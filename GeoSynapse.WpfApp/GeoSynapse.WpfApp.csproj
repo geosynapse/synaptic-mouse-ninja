@@ -2,11 +2,20 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>synapse.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="synapse.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="synapse.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GeoSynapse.Utils\GeoSynapse.Utils.csproj" />

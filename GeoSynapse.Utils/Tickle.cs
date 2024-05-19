@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using PInvoke;
 using System.Windows.Input;
-using System.Drawing;
+using System.Windows;
 
 namespace GeoSynapse.Utils
 {
@@ -54,8 +54,8 @@ namespace GeoSynapse.Poc
     {
         public static void GeoTickle(int delta)
         {
-            // Point currentPosition = Mouse.GetPosition(null);
-            // Point newPosition = new Point(currentPosition.X + delta, currentPosition.Y + delta);
+            Point currentPosition = Mouse.GetPosition(null);
+            Point newPosition = new Point(currentPosition.X + delta, currentPosition.Y + delta);
             // Mouse.Move(newPosition);
         }
     }
