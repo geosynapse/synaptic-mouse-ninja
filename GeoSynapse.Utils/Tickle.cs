@@ -51,6 +51,7 @@ namespace GeoSynapse.Utils
         public static void MoveMousePointer(int x, int y)
         {
             //Cursor.Position = new System.Windows.Point(x, y);
+
         }
 
 
