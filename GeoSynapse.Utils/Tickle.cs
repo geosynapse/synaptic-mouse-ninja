@@ -6,6 +6,7 @@ using PInvoke;
 using System.Windows.Input;
 using System.Windows;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace GeoSynapse.Utils
 {
@@ -50,8 +51,7 @@ namespace GeoSynapse.Utils
     {
         public static void MoveMousePointer(int x, int y)
         {
-            //Cursor.Position = new System.Windows.Point(x, y);
-
+            System.Windows.Forms.Cursor.Position = new System.Drawing.Point(x, y);
         }
 
 

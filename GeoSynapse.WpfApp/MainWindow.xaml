@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GeoSynapse.WpfApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="176" Width="611" Background="#FF161414">
+        Title="MainWindow" Height="126" Width="552" Background="#FF161414" FontFamily="Microsoft YaHei UI" WindowStyle="None">
     <Grid>
         <Grid x:Name="gridLayout">
             <Grid.RowDefinitions>
-                <RowDefinition x:Name="topRow" Height="60"/>
-                <RowDefinition x:Name="bottomRow" Height="Auto"/>
+                <RowDefinition x:Name="topRow" Height="40"/>
+                <RowDefinition x:Name="bottomRow" Height="Auto" MinHeight="58"/>
             </Grid.RowDefinitions>
-            <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="23,0,0,27" VerticalAlignment="Bottom" Foreground="#FF796464"/>
-            <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="134,0,0,27" VerticalAlignment="Bottom" Foreground="#FF766363"/>
-            <Button Content="Button" HorizontalAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top" Width="98" Background="#FF141313" Foreground="#FF9E8B8B"/>
-            <Slider HorizontalAlignment="Center" Margin="0,20,0,0" Grid.Row="1" VerticalAlignment="Top" Width="591"/>
+            <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="24,0,0,0" Foreground="#FF796464" Width="71" Height="14" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+            <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="129,0,0,0" Foreground="#FF766363" Width="71" Height="18" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+            <Button x:Name="minimise" Content="X" Background="#FF141313" Foreground="#FF9E8B8B" Click="MoveMousePointer" Margin="510,0,0,20" FontFamily="Microsoft YaHei UI"/>
+            <Slider x:Name="slider" Margin="10,20,10,0" Grid.Row="1" VerticalAlignment="Top" Height="18"/>
         </Grid>
 
     </Grid>

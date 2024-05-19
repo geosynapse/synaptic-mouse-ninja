@@ -17,6 +17,9 @@
 
   <ItemGroup>
     <Reference Include="PresentationCore" />
+    <Reference Include="System.Windows.Forms">
+      <HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.5\ref\net8.0\System.Windows.Forms.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
