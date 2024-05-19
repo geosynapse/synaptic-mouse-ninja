@@ -1,0 +1,22 @@
+﻿<Window x:Class="GeoSynapse.WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GeoSynapse.WpfApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="176" Width="611" Background="#FF161414">
+    <Grid>
+        <Grid x:Name="gridLayout">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="topRow" Height="60"/>
+                <RowDefinition x:Name="bottomRow" Height="Auto"/>
+            </Grid.RowDefinitions>
+            <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="23,0,0,27" VerticalAlignment="Bottom" Foreground="#FF796464"/>
+            <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="134,0,0,27" VerticalAlignment="Bottom" Foreground="#FF766363"/>
+            <Button Content="Button" HorizontalAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top" Width="98" Background="#FF141313" Foreground="#FF9E8B8B"/>
+            <Slider HorizontalAlignment="Center" Margin="0,20,0,0" Grid.Row="1" VerticalAlignment="Top" Width="591"/>
+        </Grid>
+
+    </Grid>
+</Window>

@@ -4,4 +4,4 @@ bin/
 obj/
 .vs/
 .vscode/
-Properties/launch*
+launch*
