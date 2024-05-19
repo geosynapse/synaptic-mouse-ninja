@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using PInvoke;
 using System.Windows.Input;
 using System.Windows;
+using System.Drawing;
 
 namespace GeoSynapse.Utils
 {
@@ -44,19 +45,20 @@ namespace GeoSynapse.Utils
             }
         }
     }
-}
 
-
-
-namespace GeoSynapse.Poc
-{
     public static class WPFTickle
     {
+        public static void MoveMousePointer(int x, int y)
+        {
+            //Cursor.Position = new System.Windows.Point(x, y);
+        }
+
+
         public static void GeoTickle(int delta)
         {
-            Point currentPosition = Mouse.GetPosition(null);
-            Point newPosition = new Point(currentPosition.X + delta, currentPosition.Y + delta);
-            // Mouse.Move(newPosition);
+            System.Windows.Point currentPosition = Mouse.GetPosition(null);
+            System.Windows.Point newPosition = new System.Windows.Point(currentPosition.X + delta, currentPosition.Y + delta);
+            //Mouse.Move(newPosition);
         }
     }
 }
