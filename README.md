@@ -8,12 +8,12 @@ Kudos and unending praise to *arkane-systems* for the original brilliance. We st
 
 ## Warning
 
-Tickle is dark hack code for **educational purposes only**. Seriously, don't use this in an office environment unless you're really itching for a conversation with your IT department. Use responsibly!
+Mouse Ninja is dark hack code for **educational purposes only**. Seriously, don't use this in an office environment unless you're really itching for a conversation with your IT department. Use responsibly!
 
 ## Features
 
 - **WPF Magic**: Enjoy the modern, pretty interface that only WPF can provide.
-- **No User32**: We've exorcised the old User32 dependency, making Tickle more secure and stealthy.
+- **No User32**: We've exorcised the old User32 dependency, making Mouse Ninja more secure and stealthy.
 - **Same Great Functionality**: Keeps your screen awake and idle detectors at bay, just like the original.
 
 ## Installation
@@ -28,7 +28,7 @@ Getting started with Mouse Ninja is simple:
 
 ## Usage
 
-Fire up Tickle and keep your mouse in perpetual motion. Here's the rundown:
+Fire up Mouse Ninja and keep your mouse in perpetual motion. Here's the rundown:
 
 1. **Run the App**: Launch `GeoSynapse.Ninja.exe`.
 2. **Start Jiggling**: Check the "Jiggling?" checkbox to begin.
@@ -38,7 +38,7 @@ Command-line options are also available for the power users out there:
 
 ```
 Usage:
-  GeoSynapse.Tickle [options]
+  GeoSynapse.MouseNinja [options]
 
 Options:
   -j, --jiggle               Start with jiggling enabled.
@@ -55,18 +55,18 @@ Options:
 
 ## Not Happening
 
-To save you some time, here are features you won't find in Tickle:
+To save you some time, here are features you won't find in Mouse Ninja:
 
 - **Autorun on Startup**: Use the Startup folder or Task Scheduler.
 - **Timed Startup/Shutdown**: That's what Task Scheduler is for, folks.
 
 ## Support
 
-Tickle is a labor of love, offered as-is, without warranty or support. If it breaks, you get to keep both pieces.
+Mouse Ninja is a labor of love, offered as-is, without warranty or support. If it breaks, you get to keep both pieces.
 
 ## License
 
-Tickle is licensed under the MIT License. See `LICENSE.md` for more details.
+Mouse Ninja is licensed under the MIT License. See `LICENSE.md` for more details.
 
 
 MIT License
