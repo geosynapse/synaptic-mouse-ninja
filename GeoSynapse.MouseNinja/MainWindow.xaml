@@ -1,0 +1,68 @@
+﻿<Window x:Class="GeoSynapse.MouseNinja.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:GeoSynapse.MouseNinja"
+        xmlns:converters="clr-namespace:GeoSynapse.MouseNinja.Converters"
+        mc:Ignorable="d"        
+        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
+    <Window.Resources>
+        <converters:BrightnessConverter x:Key="BrightnessConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0.1,0" EndPoint="0.9,1">
+                <GradientStop Color="#610C9F" Offset="1" />
+                <GradientStop Color="#E5CFF7" Offset="0" />
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Border Height="390" VerticalAlignment="Top" CornerRadius="0 0 180 0" Background="#100E17" MouseDown="BorderMouseDown">
+        </Border>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Width="350">
+                <Border BorderBrush="#FF170219" BorderThickness="5" Margin="25" Height="306" Width="236">
+                    <Image Source="/synaptic_ninja_large.png" Stretch="Fill" />
+                </Border>
+            </StackPanel>
+            <StackPanel Width="350">
+                <StackPanel Margin="20 40">
+                    <TextBlock Text="Synaptic Mouse Ninja" Margin="20" Foreground="White" FontSize="26" FontFamily="Microsoft YaHei UI Light" TextWrapping="Wrap"/>
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <materialDesign:PackIcon x:Name="tickIcon" Kind="Tick" Width="25" Height="25" Foreground="#444"/>
+                        <CheckBox x:Name="ninjaEnabled" Content="Synaptic Mouse Ninja Enabled" Width="262" Height="23" Foreground="#FFDDD2D2" BorderBrush="#FFEDE1E1" Checked="NinjaCheckChanged"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <materialDesign:PackIcon x:Name="zzzIcon" Kind="Sleep" Width="25" Height="25" Foreground="#444"/>
+                        <CheckBox x:Name="zenEnabled" Content="Ninja mode - no interuptions" Width="262" Height="23" Foreground="#FFDDD2D2" BorderBrush="#FFEDE1E1" Checked="ZenCheckChanged"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <materialDesign:PackIcon x:Name="faIcon" Kind="Barometer" Width="25" Height="25">
+                            <materialDesign:PackIcon.Foreground>
+                                <Binding ElementName="valueSlider" Path="Value">
+                                    <Binding.Converter>
+                                        <converters:BrightnessConverter />
+                                    </Binding.Converter>
+                                    <Binding.ConverterParameter>1.5</Binding.ConverterParameter>
+                                </Binding>
+                            </materialDesign:PackIcon.Foreground>
+                        </materialDesign:PackIcon>
+                        <Slider x:Name="valueSlider" Margin="20,0,0,0" Width="228" Height="30" Value="50" Minimum="0" Maximum="100" Style="{StaticResource LevelMeterSliderStyle}" ValueChanged="PeriodValueChanged" />
+                    </StackPanel>
+                    <StackPanel Margin="10" HorizontalAlignment="Center">
+                        <Button Width="285" Height="40" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonAssist.CornerRadius="10" BorderThickness="2" 
+                                BorderBrush="#000" Background="#FF4A1E78" Foreground="White" x:Name="btnHide" Content="Hide" Click="HideClick">
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+                <Label Foreground="#FFE65915" FontSize="28" FontFamily="OCR A Extended" Content="{Binding TimePeriod}" Height="34" HorizontalAlignment="Right"/>
+            </StackPanel>
+            <StackPanel Width="100">
+                <Button Margin="10 20" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="{x:Null}" ToolTip="Close" x:Name="btnExit" Click="ExitClick">
+                    <materialDesign:PackIcon Kind="Close" Foreground="White" Width="30" Height="30" />
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

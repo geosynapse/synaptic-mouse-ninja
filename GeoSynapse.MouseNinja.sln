@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoSynaptic Tickle", "GeoSynapse.Tickle\GeoSynapse.Tickle.csproj", "{F470596D-1F16-4F23-90E9-ECE600C5606C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoSynapse.MouseNinja", "GeoSynapse.MouseNinja\GeoSynapse.MouseNinja.csproj", "{F470596D-1F16-4F23-90E9-ECE600C5606C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DLLs", "DLLs", "{DA9FB46D-BA51-4099-B3D3-8B2936191D0B}"
 	ProjectSection(SolutionItems) = preProject

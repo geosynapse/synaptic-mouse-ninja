@@ -5,20 +5,11 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Images\synaptic_tickle_256x256.ico</ApplicationIcon>
+    <ApplicationIcon>Images\synaptic_ninja_256x256.ico</ApplicationIcon>
     <UserSecretsId>a2926bce-508b-41dd-b22f-e7dcd24c8c8e</UserSecretsId>
   </PropertyGroup>
-
   <ItemGroup>
-    <None Remove="Images\synaptic_tickle.png" />
-    <None Remove="synaptic_tickle.png" />
-    <None Remove="synaptic_tickle_large.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Images\synaptic_tickle.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <None Remove="synaptic_ninja_large.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,14 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GeoSynapse.Utils\GeoSynapse.Utils.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="System.Windows.Forms">
       <HintPath>..\DLLs\System.Windows.Forms.dll</HintPath>
       <Private>True</Private>
@@ -48,17 +31,32 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="synaptic_tickle_large.png">
+    <Content Include="Images\synaptic_ninja_256x256.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="synaptic_ninja_large.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Images\synaptic_tickle_256x256.ico">
+    <Compile Update="Ninja.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Ninja.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Images\synaptic_ninja_256x256.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Images\synaptic_tickle_64x64.ico">
+    <None Update="Images\synaptic_ninja_64x64.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Ninja.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Ninja.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
 </Project>

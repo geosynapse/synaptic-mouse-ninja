@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace GeoSynapse.WpfApp
+namespace GeoSynapse.MouseNinja
 {
     /// <summary>
     /// Interaction logic for App.xaml

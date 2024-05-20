@@ -1,8 +1,8 @@
-# Tickle: The Mouse Jiggler Reimagined
+# Mouse Ninja: The Mouse Jiggler Reimagined
 
 ## Overview
 
-Welcome to **Tickle**—a cheeky evolution of the venerable [Mouse Jiggler](https://github.com/arkane-systems/mousejiggler) by the legendary *arkane-systems*. This isn't just a mere fork; it's a whole new beast. We've taken the core idea, given it a fresh coat of WPF, refactored the heck out of it, and tossed out the ancient User32 dependency. The result? A sleeker, more secure, and less detectable solution for your mouse-jiggling needs.
+Welcome to **Synaptic Mouse Ninja**—a cheeky evolution of the venerable [Mouse Jiggler](https://github.com/arkane-systems/mousejiggler) by the legendary *arkane-systems*. This isn't just a mere fork; it's a whole new beast. We've taken the core idea, given it a fresh coat of WPF, refactored the heck out of it, and tossed out the ancient User32 dependency. The result? A sleeker, more secure, and less detectable solution for your mouse-jiggling needs.
 
 Kudos and unending praise to *arkane-systems* for the original brilliance. We stand on the shoulders of giants.
 
@@ -18,11 +18,11 @@ Tickle is dark hack code for **educational purposes only**. Seriously, don't use
 
 ## Installation
 
-Getting started with Tickle is as simple as a jiggle:
+Getting started with Mouse Ninja is simple:
 
 1. **Clone the Repo**:
    ```
-   git clone https://github.com/geosynapse/tickle.git
+   git clone https://github.com/geosynapse/synaptic-mouse-ninja.git
    ```
 2. **Build the Solution**: Open the solution in Visual Studio and hit that build button.
 
@@ -30,7 +30,7 @@ Getting started with Tickle is as simple as a jiggle:
 
 Fire up Tickle and keep your mouse in perpetual motion. Here's the rundown:
 
-1. **Run the App**: Launch `GeoSynapse.Tickle.exe`.
+1. **Run the App**: Launch `GeoSynapse.Ninja.exe`.
 2. **Start Jiggling**: Check the "Jiggling?" checkbox to begin.
 3. **Zen Mode**: Enable "Zen jiggle?" to jiggle the mouse without actually moving the pointer. (Warning: May not work with all idle detection systems).
 
