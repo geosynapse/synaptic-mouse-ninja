@@ -6,8 +6,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:GeoSynapse.MouseNinja"
         xmlns:converters="clr-namespace:GeoSynapse.MouseNinja.Converters"
-        mc:Ignorable="d"        
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" Closing="OnWindowClosed">
     <Window.Resources>
         <converters:BrightnessConverter x:Key="BrightnessConverter" />
     </Window.Resources>
@@ -18,7 +18,7 @@
                 <GradientStop Color="#E5CFF7" Offset="0" />
             </LinearGradientBrush>
         </Grid.Background>
-        <Border Height="390" VerticalAlignment="Top" CornerRadius="0 0 180 0" Background="#100E17" MouseDown="BorderMouseDown">
+        <Border Height="390" VerticalAlignment="Top" CornerRadius="0 0 180 0" Background="#100E17" MouseDown="OnWindowMouseDown">
         </Border>
         <StackPanel Orientation="Horizontal">
             <StackPanel Width="350">
@@ -31,11 +31,11 @@
                     <TextBlock Text="Synaptic Mouse Ninja" Margin="20" Foreground="White" FontSize="26" FontFamily="Microsoft YaHei UI Light" TextWrapping="Wrap"/>
                     <StackPanel Orientation="Horizontal" Margin="10">
                         <materialDesign:PackIcon x:Name="tickIcon" Kind="Tick" Width="25" Height="25" Foreground="#444"/>
-                        <CheckBox x:Name="ninjaEnabled" Content="Synaptic Mouse Ninja Enabled" Width="262" Height="23" Foreground="#FFDDD2D2" BorderBrush="#FFEDE1E1" Checked="NinjaCheckChanged"/>
+                        <CheckBox x:Name="appEnabled" Content="Synaptic Mouse Ninja Enabled" Width="262" Height="23" Foreground="#FFDDD2D2" BorderBrush="#FFEDE1E1" Click="OnAppEnableChanged"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="10">
                         <materialDesign:PackIcon x:Name="zzzIcon" Kind="Sleep" Width="25" Height="25" Foreground="#444"/>
-                        <CheckBox x:Name="zenEnabled" Content="Ninja mode - no interuptions" Width="262" Height="23" Foreground="#FFDDD2D2" BorderBrush="#FFEDE1E1" Checked="ZenCheckChanged"/>
+                        <CheckBox x:Name="zenEnabled" Content="Ninja mode - no interuptions" Width="262" Height="23" Foreground="#FFDDD2D2" BorderBrush="#FFEDE1E1" Checked="OnZenModeChanged" Unchecked="OnZenModeChanged"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="10">
                         <materialDesign:PackIcon x:Name="faIcon" Kind="Barometer" Width="25" Height="25">
@@ -48,18 +48,18 @@
                                 </Binding>
                             </materialDesign:PackIcon.Foreground>
                         </materialDesign:PackIcon>
-                        <Slider x:Name="valueSlider" Margin="20,0,0,0" Width="228" Height="30" Value="50" Minimum="0" Maximum="100" Style="{StaticResource LevelMeterSliderStyle}" ValueChanged="PeriodValueChanged" />
+                        <Slider x:Name="valueSlider" Margin="20,0,0,0" Width="228" Height="30" Value="50" Minimum="0" Maximum="100" Style="{StaticResource LevelMeterSliderStyle}" ValueChanged="OnPeriodSliderChanged" />
                     </StackPanel>
                     <StackPanel Margin="10" HorizontalAlignment="Center">
-                        <Button Width="285" Height="40" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonAssist.CornerRadius="10" BorderThickness="2" 
-                                BorderBrush="#000" Background="#FF4A1E78" Foreground="White" x:Name="btnHide" Content="Hide" Click="HideClick">
+                        <Button Width="285" Height="40" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonAssist.CornerRadius="10" BorderThickness="2"
+                                BorderBrush="#000" Background="#FF4A1E78" Foreground="White" x:Name="btnHide" Content="Hide" Click="OnHideClick">
                         </Button>
                     </StackPanel>
                 </StackPanel>
                 <Label Foreground="#FFE65915" FontSize="28" FontFamily="OCR A Extended" Content="{Binding TimePeriod}" Height="34" HorizontalAlignment="Right"/>
             </StackPanel>
             <StackPanel Width="100">
-                <Button Margin="10 20" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="{x:Null}" ToolTip="Close" x:Name="btnExit" Click="ExitClick">
+                <Button Margin="10 20" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="{x:Null}" ToolTip="Close" x:Name="btnExit" Click="OnExitClick">
                     <materialDesign:PackIcon Kind="Close" Foreground="White" Width="30" Height="30" />
                 </Button>
             </StackPanel>

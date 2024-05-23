@@ -1,66 +1,29 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.VisualBasic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
+using Brushes = System.Windows.Media.Brushes;
+using Color = System.Windows.Media.Color;
+using ColorConverter = System.Windows.Media.ColorConverter;
+using Timer = System.Windows.Forms.Timer;
 
 namespace GeoSynapse.MouseNinja
 {
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        public string TimePeriod
-        {
-            get
-            {
-                if (timer == null)
-                    return "3:00";
-                // if time.Interval is 1000 return empty string
-                if (timer.Interval == 1000)
-                    return string.Empty;
-                return TimeIntervalToString(timer.Interval);
-            }
-        }
+        private const int DefaultInterval = 3000;
+        private const int OneSecondInterval = 1000;
+        private const string DefaultTimePeriod = "3:00";
+        private const string DefaultStringProperty = "3000";
+        private const int maxDistance = 5;
+        private const int waitMilliseconds = 10;
+        private Random random = new Random();
 
-        public int Period
-        {
-            get
-            {
-                if (timer == null)
-                    return 3000;
-                return timer.Interval;
-            }
-            set
-            {
-                if (timer != null && timer.Interval != value)
-                {
-                    timer.Interval = value;
-                    OnPropertyChanged("Period");
-                    OnPropertyChanged("TimePeriod");                    
-                }
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        protected NotifyIcon? notifyIcon;
-        protected System.Windows.Forms.Timer? timer;
-
-
-        public string MyStringProperty
-        {
-            get
-            {
-                if (timer == null)
-                    return "3000";
-                return timer.Interval.ToString();
-            }
-        }
+        private Timer? _timer;
+        private NotifyIcon? _notifyIcon;
 
         public MainWindow() : this(ninjaOnStartup: false, minimizeOnStartup: false, ninja: false, period: 3) { }
 
@@ -73,105 +36,176 @@ namespace GeoSynapse.MouseNinja
             InitializeTrayIcon();
             InitializeTimer();
 
-
-            // Loading data from the settings
             Period = Ninja.Default.Period;
-            Console.WriteLine($"Loaded setting: {Period}");
+            valueSlider.Value = FromTimerIntervalToSliderValue(Period);
+            AppEnabled = Ninja.Default.MouseNinjaEnabled;
+            ZenModeEnabled = Ninja.Default.NinjaModeEnabled;
+            Debug.WriteLine($"Loaded setting: {Period}");
 
-            if (timer != null) timer.Interval = Ninja.Default.Period;
+            LoadPeriodFromSettings();
+        }
+
+        public string TimePeriod => _timer == null ? DefaultTimePeriod : _timer.Interval == OneSecondInterval ? string.Empty : TimeIntervalToString(_timer.Interval);
+
+        public int Period
+        {
+            get => _timer?.Interval ?? DefaultInterval;
+            set
+            {
+                if (_timer != null && _timer.Interval != value)
+                {
+                    _timer.Interval = value;
+                    OnPropertyChanged(nameof(Period));
+                    OnPropertyChanged(nameof(TimePeriod));
+                }
+            }
+        }
+
+        private bool AppEnabled
+        {
+            get
+            {
+                return appEnabled.IsChecked.HasValue && appEnabled.IsChecked.Value;
+            }
+            set
+            {
+                appEnabled.IsChecked = value;
+                tickIcon.Foreground = value ? Brushes.White : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#444"));
+            }
+        }
+
+        private bool ZenModeEnabled
+        {
+            get
+            {
+                return zenEnabled.IsChecked.HasValue && zenEnabled.IsChecked.Value;
+            }
+            set
+            {
+                zenEnabled.IsChecked = value;
+                zzzIcon.Foreground = value ? Brushes.White : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#444"));
+            }
+        }
+
+        public string MyStringProperty => _timer?.Interval.ToString() ?? DefaultStringProperty;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void InitializeTimer()
         {
-            timer = new System.Windows.Forms.Timer();
-            timer.Interval = 3000;
-            timer.Tick += GeoTimerTick;
-            timer.Enabled = true;
+            _timer = new Timer { Interval = DefaultInterval, Enabled = true };
+            _timer.Tick += OnTimerTick;
         }
 
-        private void GeoTimerTick(object? sender, EventArgs e)
+        private void LoadPeriodFromSettings()
         {
-            // LEAVE THIS CODE HERE AS A REMINDER OF THE ORIGINAL FUNCTIONALITY FROM THE ORIGINAL PROJECT arkane-systems/mousejiggler
-            //if (this.ZenJiggleEnabled)
-            //    Helpers.Jiggle(delta: 0);
-            //else if (this.Zig)
-            //    Helpers.Jiggle(delta: 4);
-            //else //zag
-            //    Helpers.Jiggle(delta: -4);
-            //this.Zig = !this.Zig;
+            int period = Ninja.Default.Period;
+            if (_timer != null)
+            {
+                _timer.Interval = period;
+            }
+        }
 
+        private async void OnTimerTick(object? sender, EventArgs e)
+        {
             System.Drawing.Point position = System.Windows.Forms.Cursor.Position;
             Debug.WriteLine("X: " + position.X + " Y: " + position.Y);
-            System.Windows.Forms.Cursor.Position = new System.Drawing.Point(position.X + 2, position.Y + 2);
+            int distance = random.Next(maxDistance) + 1;
+            System.Windows.Forms.Cursor.Position = new System.Drawing.Point(position.X + random.Next(-distance, distance), position.Y + random.Next(-distance, distance));
 
-            if (zenEnabled.IsChecked.HasValue && zenEnabled.IsChecked.Value)
+            await Task.Delay(waitMilliseconds);
+
+            // Repeat random movement two more times to emulate the zig-zag movement of a ninja's original version
+            for (int i = 0; i < 2; i++)
+            {
+                distance = random.Next(maxDistance) + 1;
+
+                System.Windows.Forms.Cursor.Position = new System.Drawing.Point(position.X + random.Next(-distance, distance), position.Y + random.Next(-distance, distance));
+
+                await Task.Delay(waitMilliseconds);
+            }
+
+            if (ZenModeEnabled)
             {
                 System.Windows.Forms.Cursor.Position = new System.Drawing.Point(position.X, position.Y);
             }
-            //else if (zigEnabled.IsChecked.HasValue && zigEnabled.IsChecked.Value)
-            //{
-            //    System.Windows.Forms.Cursor.Position = new System.Drawing.Point(position.X + 4, position.Y + 4);
-            //}
-            //else if (zagEnabled.IsChecked.HasValue && zagEnabled.IsChecked.Value)
-            //{
-            //    System.Windows.Forms.Cursor.Position = new System.Drawing.Point(position.X - 4, position.Y - 4);
-            //}
             else
             {
-                System.Windows.Forms.Cursor.Position = new System.Drawing.Point(position.X + 1, position.Y + 1);
+                System.Windows.Forms.Cursor.Position = new System.Drawing.Point(position.X + random.Next(-1, 2), position.Y + random.Next(-1, 2));
             }
         }
 
         private void NinjaCheckedChanged(object sender, EventArgs e)
         {
-            if (timer == null)
+            if (_timer == null)
+            {
                 InitializeTimer();
+            }
 
-            if (timer != null && ninjaEnabled.IsChecked.HasValue)
-                timer.Enabled = ninjaEnabled.IsChecked.Value;
+            if (appEnabled.IsChecked == true && _timer != null)
+            {
+                _timer.Enabled = true;
+            }
         }
 
         private void InitializeTrayIcon()
         {
-            notifyIcon = new NotifyIcon();
-            notifyIcon.Icon = new System.Drawing.Icon("Images\\synaptic_ninja_64x64.ico"); // Make sure to add a valid icon file
-            notifyIcon.Visible = true;
-            notifyIcon.Text = "Synaptic Ninja";
+            _notifyIcon = new NotifyIcon
+            {
+                Icon = new System.Drawing.Icon("Images\\synaptic_ninja_64x64.ico"),
+                Visible = true,
+                Text = "Synaptic Ninja",
+                ContextMenuStrip = CreateContextMenu()
+            };
 
-            // Create a context menu for the tray icon
+            _notifyIcon.DoubleClick += OnNotifyIconDoubleClick;
+        }
+
+        private ContextMenuStrip CreateContextMenu()
+        {
             var contextMenu = new ContextMenuStrip();
             var exitMenuItem = new ToolStripMenuItem("Exit");
             var zenMenuItem = new ToolStripMenuItem("Zen");
-            exitMenuItem.Click += ExitMenuItemClick;
-            exitMenuItem.Click += ZenMenuItemClick;
+
+            exitMenuItem.Click += OnExitMenuItemClick;
+            zenMenuItem.Click += OnTrayZenModeClicked;
+
             contextMenu.Items.Add(exitMenuItem);
             contextMenu.Items.Add(zenMenuItem);
-            notifyIcon.ContextMenuStrip = contextMenu;
-            notifyIcon.DoubleClick += NotifyIconDoubleClick;
+
+            return contextMenu;
         }
 
-        private void ZenMenuItemClick(object? sender, EventArgs e)
+        private void OnTrayZenModeClicked(object? sender, EventArgs e)
         {
             zenEnabled.IsChecked = !zenEnabled.IsChecked;
-            if (zenEnabled.IsChecked.HasValue && zenEnabled.IsChecked.Value)
-            {
-                zzzIcon.Foreground = System.Windows.Media.Brushes.White;
-            }
-            else
-            {
-                zzzIcon.Foreground = new SolidColorBrush((System.Windows.Media.Color)ColorConverter.ConvertFromString("#444"));
-            }
+            ZenModeEnabled = zenEnabled.IsChecked.HasValue && zenEnabled.IsChecked.Value;
         }
 
-        private void NotifyIconDoubleClick(object? sender, EventArgs e)
+        private void OnZenModeChanged(object? sender, EventArgs e)
+        {
+            ZenModeEnabled = zenEnabled.IsChecked.HasValue && zenEnabled.IsChecked.Value;
+        }
+
+        private void OnAppEnableChanged(object? sender, RoutedEventArgs e)
+        {
+            AppEnabled = zenEnabled.IsChecked.HasValue && appEnabled.IsChecked.Value;
+        }
+
+        private void OnNotifyIconDoubleClick(object? sender, EventArgs e)
         {
             Show();
             WindowState = WindowState.Normal;
         }
 
-        private void ExitMenuItemClick(object? sender, EventArgs e)
+        private void OnExitMenuItemClick(object? sender, EventArgs e)
         {
-            notifyIcon?.Dispose();
+            _notifyIcon?.Dispose();
             System.Windows.Application.Current.Shutdown();
         }
 
@@ -186,84 +220,86 @@ namespace GeoSynapse.MouseNinja
 
         protected override void OnClosed(EventArgs e)
         {
-            notifyIcon?.Dispose();
+            _notifyIcon?.Dispose();
             base.OnClosed(e);
         }
 
-        private void BorderMouseDown(object? sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OnWindowMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             DragMove();
         }
 
-        private void HideClick(object? sender, RoutedEventArgs e)
+        private void OnHideClick(object sender, RoutedEventArgs e)
         {
             Hide();
         }
 
-        private void ExitClick(object? sender, RoutedEventArgs e)
+        private void OnExitClick(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
         }
 
-        private void ZenCheckChanged(object? sender, RoutedEventArgs e)
-        {
-
-        }
-        private void NinjaCheckChanged(object? sender, RoutedEventArgs e)
-        {
-            if (ninjaEnabled.IsChecked.HasValue && ninjaEnabled.IsChecked.Value && timer != null)
-            {
-                tickIcon.Foreground = System.Windows.Media.Brushes.White;
-            }
-            else
-            {
-                tickIcon.Foreground = new System.Windows.Media.SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#444"));
-            }
-        }
-
-        private void PeriodValueChanged(object? sender, RoutedPropertyChangedEventArgs<double> e)
+        private void OnPeriodSliderChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (sender is Slider slider)
             {
-                var output = 5970 * slider.Value + 3000;
+                var output = 5970 * slider.Value + DefaultInterval;
 
-
-                if (timer != null)
+                if (_timer != null)
                 {
                     Period = (int)output;
 
-                    // Persisting data to the settings
                     Ninja.Default.Period = Period;
-                    Ninja.Default.Save(); // Don't forget to save the changes
-                    Console.WriteLine($"Updated setting: {Ninja.Default.Period}");
+                    Ninja.Default.Save();
+                    Debug.WriteLine($"Updated setting: {Ninja.Default.Period}");
                 }
             }
         }
 
+        private int FromTimerIntervalToSliderValue(int value)
+        {
+            if (value < DefaultInterval || value > 600000)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value), "Value must be between 3,000 and 600,000.");
+            }
+
+            int result = (100 * (value - 3000)) / 597000;
+
+            return result;
+        }
+
+        private void SavePeriodToSettings()
+        {
+            if (_timer != null) Ninja.Default.Period = _timer.Interval;
+            Ninja.Default.MouseNinjaEnabled = appEnabled.IsChecked.HasValue && appEnabled.IsChecked.Value;
+            Ninja.Default.NinjaModeEnabled = zenEnabled.IsChecked.HasValue && zenEnabled.IsChecked.Value;
+            Ninja.Default.Save();
+        }
+
+        protected void OnWindowClosed(object def, EventArgs e)
+        {
+            SavePeriodToSettings();
+            _notifyIcon?.Dispose();
+            base.OnClosed(e);
+        }
+
         public static string TimeIntervalToString(int input)
         {
-            // Define the input and output ranges
-            const int inputMin = 3000;
+            const int inputMin = DefaultInterval;
             const int inputMax = 600000;
-            const int outputMin = 3; // in seconds
-            const int outputMax = 10 * 60; // in seconds
+            const int outputMin = 3;
+            const int outputMax = 10 * 60;
 
-            // Ensure the input is within the expected range
             if (input < inputMin || input > inputMax)
             {
                 throw new ArgumentOutOfRangeException(nameof(input), $"Input must be between {inputMin} and {inputMax}");
             }
 
-            // Perform the linear transformation
             double proportion = (double)(input - inputMin) / (inputMax - inputMin);
             int output = outputMin + (int)(proportion * (outputMax - outputMin));
 
-            // Convert the output to a time string
             TimeSpan time = TimeSpan.FromSeconds(output);
-            string timeString = time.ToString(@"mm\:ss");
-
-            return timeString;
+            return time.ToString(@"mm\:ss");
         }
-
     }
 }
