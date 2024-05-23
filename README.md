@@ -38,15 +38,7 @@ Command-line options are also available for the power users out there:
 
 ```
 Usage:
-  GeoSynapse.MouseNinja [options]
-
-Options:
-  -j, --jiggle               Start with jiggling enabled.
-  -m, --minimized            Start minimized. [default: False]
-  -z, --zen                  Start with zen jiggling enabled. [default: False]
-  -s, --seconds <seconds>    Set jiggle interval in seconds. [default: 1]
-  --version                  Show version information.
-  -?, -h, --help             Show help and usage information.
+  GeoSynapse.MouseNinja [is-enabled] [is-minimized] [is-in-zen-mode] [interval-period]
 ```
 
 ## Bugs & Quirks

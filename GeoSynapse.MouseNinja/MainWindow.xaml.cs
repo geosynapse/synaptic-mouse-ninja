@@ -25,24 +25,44 @@ namespace GeoSynapse.MouseNinja
         private Timer? _timer;
         private NotifyIcon? _notifyIcon;
 
-        public MainWindow() : this(ninjaOnStartup: false, minimizeOnStartup: false, ninja: false, period: 3) { }
-
-        public MainWindow(bool ninjaOnStartup, bool minimizeOnStartup, bool ninja, int period)
+        public MainWindow(string[]? args = null)
         {
             InitializeComponent();
-
             DataContext = this;
-
             InitializeTrayIcon();
             InitializeTimer();
 
+            bool enabled = false;
+            bool minimized = false;
+            bool zen = false;
+            int period = 3000;
+            bool calledFromCommandLine = false;
+            if (args != null && args.Length == 4
+                && (bool.TryParse(args[0], out enabled) &&
+                    bool.TryParse(args[1], out minimized) &&
+                    bool.TryParse(args[2], out zen) &&
+                    int.TryParse(args[3], out period)))
+            {
+                AppEnabled = enabled;
+                ZenModeEnabled = zen;
+                Period = period;
+                if (minimized) WindowState = WindowState.Minimized;
+                calledFromCommandLine = true;
+            }
+
+            if (!calledFromCommandLine)
+            {
+                LoadSettings();
+            }
+        }
+
+        private void LoadSettings()
+        {
             Period = Ninja.Default.Period;
             valueSlider.Value = FromTimerIntervalToSliderValue(Period);
             AppEnabled = Ninja.Default.MouseNinjaEnabled;
             ZenModeEnabled = Ninja.Default.NinjaModeEnabled;
             Debug.WriteLine($"Loaded setting: {Period}");
-
-            LoadPeriodFromSettings();
         }
 
         public string TimePeriod => _timer == null ? DefaultTimePeriod : _timer.Interval == OneSecondInterval ? string.Empty : TimeIntervalToString(_timer.Interval);
@@ -100,15 +120,6 @@ namespace GeoSynapse.MouseNinja
         {
             _timer = new Timer { Interval = DefaultInterval, Enabled = true };
             _timer.Tick += OnTimerTick;
-        }
-
-        private void LoadPeriodFromSettings()
-        {
-            int period = Ninja.Default.Period;
-            if (_timer != null)
-            {
-                _timer.Interval = period;
-            }
         }
 
         private async void OnTimerTick(object? sender, EventArgs e)
